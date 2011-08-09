@@ -12,19 +12,24 @@
 	<script src="jquery-ui-1.8.14.custom.min.js"></script>
 	<link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.8.14.custom.css"/>
 	<style>
-	.column { width: 170px; float: left; padding-bottom: 100px; padding-left:0.2em; padding-right: 0.2em }
-	.portlet { margin: 0 1em 1em 0; float:left;}
+	.column { width: 170px; float: left; padding-bottom: 100px; padding-left:0.2em; padding-right: 0.2em; background-color: #C9C9C9;border: dotted #000000 1px;}
+	.portlet { margin: 0 1em 1em 0; float:left; width:140px;}
 	.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
 	.portlet-header .ui-icon { float: right; }
 	.portlet-content { padding: 0.4em; }
 	.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
 	.ui-sortable-placeholder * { visibility: hidden; }
+	
+	.ui-state-highlight {height: 1.5em; line-height: 1.2em;  }
+	
+	
 	</style>
 	<script>
 	
 	$(function() {
 		$( ".column" ).sortable({
-			connectWith: ".column"
+			connectWith: ".column",
+			placeholder: "ui-state-highlight"
 		});
 
 		$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
@@ -42,88 +47,77 @@
 		var i=1;
 		
 		
-		
 		$( ".column" ).disableSelection();
 		
 		$("#bt_addCol").click(function(){
 			$('#myGrid').append("<div class='column' id='column"+i+"'></div>");
 			
+			$('.column').resizable();
+			
 			$('.column').sortable('destroy');
 			
+			
+			
 			$( ".column" ).sortable({
-				connectWith: ".column"
+				connectWith: ".column",
+				placeholder: "ui-state-highlight"
 			});
 			
+			$(".column").draggable();
 
 			i++;
 			
 		});
 		
-		
 		$(".portlet").resizable({
-			// alsoResize:$(this).parent(".column"),
+			
+			//alsoResize:".column",
+			
 			stop:function(event,ui){
-				//$(event.target).parent(".column").css('width','300px');
-				//alert($(this).parent(".column"));
-				// alert("Stop");
-			
-				var x=event.target;
-				var p=$(x).parent();
-					//$(p).css("width",ui.size.width);
-					//$(p).css('marginLeft','0.2em');
-					//$(p).css('marginRight','0.2em');
-					
-					//setting parent .column width.
-					//$(p).animate({width:childwidth,},200); //time of animation 0.2sec
-					
-				 	
-					//alert(c);
-					var maxwidth=ui.size.width;
-					for (var i=0; i < $(x).siblings('.portlet').length; i++) {
-					  var jportlet=$(x).siblings('.portlet')[i];
-					  if(maxwidth<$(jportlet).outerWidth()){
-					  	maxwidth=$(jportlet).outerWidth();
-					  }
-					  else{
-					  	//insert another column :D
-					  	
-					  	if(($(p).outerWidth()-$(jportlet).outerWidth())>170){
-					  		//alert("in");
-					  		//$(jportlet).after("<div class='column'></div>");
-					  		//	$('.column').sortable('destroy');
-			
-							//	$( ".column" ).sortable({
-							//		connectWith: ".column"
-							//	});
-					  		
-					  		
-					  	}
-					  	
-					  }
-					};
+							//$(event.target).parent(".column").css('width','300px');
+							//alert($(this).parent(".column"));
+							// alert("Stop");
 						
-					//setting parent .column width.
-					$(p).animate({width:maxwidth,},1000,'easeOutBounce'); //time of animation 0.2sec		
-					
-			},
-			
+							var x=event.target;
+							var p=$(x).parent();
+								var maxwidth=ui.size.width;
+								for (var i=0; i < $(x).siblings('.portlet').length; i++) {
+								  var jportlet=$(x).siblings('.portlet')[i];
+								  if(maxwidth<$(jportlet).outerWidth()){
+									  maxwidth=$(jportlet).outerWidth();
+								  }
+								  else{
+									 if(($(p).outerWidth()-$(jportlet).outerWidth())>170){
+									 	}
+									}
+								};
+								//setting parent .column width.
+								$(p).animate({width:maxwidth,},1000); //time of animation 0.2sec		
+							
+						},
 			
 			
 	});
 		
 		
 		
-		
-		
-		
-		//$(".column").resizable();
-		
-	});
+		$('.column').hover(
+	/*
+			function(){
+				
+					$(this).css('background-color','#000000');
+				},
+				function(){
+					$(this).css('background-color','#FFFFFF')
+				}*/
 	
+		
+		);
+		
+	
+	});
 	
 
-	
-	
 	
 	</script>
 	
